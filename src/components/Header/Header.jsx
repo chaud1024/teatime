@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import { BiExit } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { login, logout, onUserStateChange } from "../../api/firebase";
+import Button from "../../ui/Button";
 import Logo from "./Logo";
 import User from "./User";
 
 export default function Header() {
-  const navigate = useNavigate();
-
   const [user, setUser] = useState();
 
   useEffect(() => {
-    onUserStateChange((user) => setUser(user));
+    onUserStateChange((user) => {
+      console.log(user);
+      setUser(user);
+    });
   }, []);
 
   const handleLogIn = () => {
@@ -24,32 +26,34 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full flex justify-between px-10 py-4 bg-white drop-shadow-lg">
-      <Link className="w-40" href="/">
+    <header className="w-full flex justify-between px-6 py-1 md:px-10 md:py-4 bg-white drop-shadow-lg">
+      <Link className="w-40" to="/">
         <Logo />
       </Link>
       <nav className="flex items-center gap-2">
-        <Link
-          className="p-2 font-semibold"
-          onClick={() => navigate("/products")}>
+        <Link className="p-2 font-semibold" to="/products">
           All Products
         </Link>
-        <Link className="p-2" onClick={() => navigate("/cart")}>
-          <HiOutlineShoppingBag className="text-2xl" />
-        </Link>
-        <Link className="p-2" onClick={() => navigate("/products/add")}>
-          <AiOutlineEdit className="text-2xl" />
-        </Link>
-        {user && <User user={user} />}
-        {!user && (
-          <button className="p-2" onClick={handleLogIn}>
-            <AiOutlineUser className="text-2xl" />
-          </button>
+        {user && (
+          <Link className="p-2" to="/cart">
+            <HiOutlineShoppingBag className="text-2xl" />
+          </Link>
         )}
         {user && (
-          <button className="p-2" onClick={handleLogOut}>
+          <>
+            {user.isAdmin ? (
+              <Link className="p-2" to="/products/add">
+                <AiOutlineEdit className="text-2xl" />
+              </Link>
+            ) : null}
+            <User user={user} />
+          </>
+        )}
+        {!user && (
+            <AiOutlineUser className="text-2xl" />
+        )}
+        {user && (
             <BiExit className="text-2xl" />
-          </button>
         )}
       </nav>
     </header>
