@@ -50,10 +50,14 @@ export default function Header() {
           </>
         )}
         {!user && (
+          <Button onClick={handleLogIn}>
             <AiOutlineUser className="text-2xl" />
+          </Button>
         )}
         {user && (
+          <Button onClick={handleLogOut}>
             <BiExit className="text-2xl" />
+          </Button>
         )}
       </nav>
     </header>
