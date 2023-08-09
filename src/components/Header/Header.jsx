@@ -1,22 +1,58 @@
-import React from "react";
-import { AiOutlineUser } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
+import { BiExit } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { Link, useNavigate } from "react-router-dom";
+import { login, logout, onUserStateChange } from "../../api/firebase";
 import Logo from "./Logo";
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    onUserStateChange((user) => {
+      console.log(user);
+      setUser(user);
+    });
+  }, []);
+
+  const handleLogIn = () => {
+    login().then(setUser);
+  };
+  const handleLogOut = () => {
+    logout().then(setUser);
+  };
+
   return (
     <header className="w-full flex justify-between px-10 py-4 bg-white drop-shadow-lg">
-      <a className="w-40" href="/">
+      <Link className="w-40" href="/">
         <Logo />
-      </a>
-      <div className="flex gap-2">
-        <button className="p-2">
+      </Link>
+      <nav className="flex items-center gap-2">
+        <Link
+          className="p-2 font-semibold"
+          onClick={() => navigate("/products")}>
+          All Products
+        </Link>
+        <Link className="p-2" onClick={() => navigate("/cart")}>
           <HiOutlineShoppingBag className="text-2xl" />
-        </button>
-        <button className="p-2">
-          <AiOutlineUser className="text-2xl" />
-        </button>
-      </div>
+        </Link>
+        <Link className="p-2" onClick={() => navigate("/products/add")}>
+          <AiOutlineEdit className="text-2xl" />
+        </Link>
+        {!user && (
+          <button className="p-2" onClick={handleLogIn}>
+            <AiOutlineUser className="text-2xl" />
+          </button>
+        )}
+        {user && (
+          <button className="p-2" onClick={handleLogOut}>
+            <BiExit className="text-2xl" />
+          </button>
+        )}
+      </nav>
     </header>
   );
 }
