@@ -39,14 +39,14 @@ export async function logout() {
 export function onUserStateChange(callback) {
   return onAuthStateChanged(auth, async (user) => {
     // 1. 사용자가 있는경우(로그인 한 경우)
-    // 2. 사용자가 어드민 권한이 있는지 확인
-    // 3.  {...user, isAdmin: true/false}
     const updatedUser = user ? await adminUser(user) : null;
     callback(updatedUser);
   });
 }
 
 async function adminUser(user) {
+  // 2. 사용자가 어드민 권한이 있는지 확인
+  // 3.  {...user, isAdmin: true/false}
   return get(ref(database, "admins"))
     .then((snapshot) => {
       if (snapshot.exists()) {
