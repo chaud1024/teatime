@@ -3,7 +3,7 @@ import React from "react";
 export default function Logo() {
   return (
     <svg
-      className="w-40"
+      className="w-20 md:w-40"
       width="248"
       height="60"
       viewBox="0 0 248 60"
