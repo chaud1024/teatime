@@ -3,8 +3,11 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
+import AddProducts from "./page/AddProducts";
+import Cart from "./page/Cart";
+import ProductDetail from "./page/ProductDetail";
 import Products from "./page/Products";
-import ProductsDetail from "./page/ProductsDetail";
+
 import reportWebVitals from "./reportWebVitals";
 
 const router = createBrowserRouter([
@@ -26,8 +29,16 @@ const router = createBrowserRouter([
         element: <Products />,
       },
       {
-        path: "/products/detail/:productId",
-        element: <ProductsDetail />,
+        path: "/products/:productId",
+        element: <ProductDetail />,
+      },
+      {
+        path: "/products/add",
+        element: <AddProducts />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
   },
