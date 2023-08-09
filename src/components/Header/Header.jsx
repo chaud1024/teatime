@@ -5,6 +5,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import { login, logout, onUserStateChange } from "../../api/firebase";
 import Logo from "./Logo";
+import User from "./User";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -12,10 +13,7 @@ export default function Header() {
   const [user, setUser] = useState();
 
   useEffect(() => {
-    onUserStateChange((user) => {
-      console.log(user);
-      setUser(user);
-    });
+    onUserStateChange((user) => setUser(user));
   }, []);
 
   const handleLogIn = () => {
@@ -42,6 +40,7 @@ export default function Header() {
         <Link className="p-2" onClick={() => navigate("/products/add")}>
           <AiOutlineEdit className="text-2xl" />
         </Link>
+        {user && <User user={user} />}
         {!user && (
           <button className="p-2" onClick={handleLogIn}>
             <AiOutlineUser className="text-2xl" />
