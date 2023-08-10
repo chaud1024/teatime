@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import { BiExit } from "react-icons/bi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { login, logout, onUserStateChange } from "../../api/firebase";
+import { useAuthContext } from "../../context/AuthContext";
 import Button from "../../ui/Button";
 import Logo from "./Logo";
 import User from "./User";
 
 export default function Header() {
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    onUserStateChange((user) => {
-      console.log(user);
-      setUser(user);
-    });
-  }, []);
-
-  const handleLogIn = () => {
-    login().then(setUser);
-  };
-  const handleLogOut = () => {
-    logout().then(setUser);
-  };
+  const { user, login, logout } = useAuthContext();
 
   return (
     <header className="w-full flex justify-between px-6 py-1 md:px-10 md:py-4 bg-white drop-shadow-lg">
@@ -50,12 +36,12 @@ export default function Header() {
           </>
         )}
         {!user && (
-          <Button onClick={handleLogIn}>
+          <Button onClick={login}>
             <AiOutlineUser className="text-2xl" />
           </Button>
         )}
         {user && (
-          <Button onClick={handleLogOut}>
+          <Button onClick={logout}>
             <BiExit className="text-2xl" />
           </Button>
         )}
