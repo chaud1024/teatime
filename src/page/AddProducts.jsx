@@ -84,7 +84,7 @@ export default function AddProducts() {
         />
         <LableInput
           htmlFor={`productPrice`}
-          text={`제품가격(per 10g)`}
+          text={`제품가격(per 100g)`}
           type={`number`}
           name={`price`}
           id={`productPrice`}
