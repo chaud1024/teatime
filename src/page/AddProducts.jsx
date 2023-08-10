@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { addNewProduct } from "../api/firebase";
 import { uploadImage } from "../api/uploader";
 
 export default function AddProducts() {
@@ -9,17 +10,20 @@ export default function AddProducts() {
     const { name, value, files } = e.target;
     if (name === "file") {
       setFile(files && files[0]);
+      console.log(files);
       return;
     }
     setProduct((product) => ({ ...product, [name]: value }));
+    console.log(product);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     // 제품 사진을 Cloudinary에 업로드하고 url획득
     uploadImage(file).then((url) => {
       console.log(url);
+      // Firebae에 새로운 제품 추가
+      addNewProduct(product, url);
     });
-    // Firebae에 새로운 제품 추가
   };
   return (
     <section>
