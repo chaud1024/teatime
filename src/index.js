@@ -8,6 +8,7 @@ import Cart from "./page/Cart";
 import ProductDetail from "./page/ProductDetail";
 import Products from "./page/Products";
 
+import ProtectedRoute from "./page/ProtectedRoute";
 import reportWebVitals from "./reportWebVitals";
 
 const router = createBrowserRouter([
@@ -34,11 +35,19 @@ const router = createBrowserRouter([
       },
       {
         path: "/products/add",
-        element: <AddProducts />,
+        element: (
+          <ProtectedRoute requireAdmin>
+            <AddProducts />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/cart",
-        element: <Cart />,
+        element: (
+          <ProtectedRoute>
+            <Cart />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
