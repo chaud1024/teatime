@@ -46,7 +46,7 @@ export default function AddProducts() {
           className="w-96 m-auto mb-4"
         />
       )}
-      <form onSubmit={handleSubmit} className="flex flex-col px-12 gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col px-12 gap-2">
         <div className="w-full flex gap-4">
           <label htmlFor="addFile" className="w-3/12 text-start">
             제품사진
