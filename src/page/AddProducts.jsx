@@ -5,29 +5,39 @@ import { uploadImage } from "../api/uploader";
 export default function AddProducts() {
   const [product, setProduct] = useState({});
   const [file, setFile] = useState();
+  const [isUploading, setIsUploading] = useState(false);
+  const [success, setSuccess] = useState();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "file") {
       setFile(files && files[0]);
-      console.log(files);
       return;
     }
     setProduct((product) => ({ ...product, [name]: value }));
-    console.log(product);
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 제품 사진을 Cloudinary에 업로드하고 url획득
-    uploadImage(file).then((url) => {
-      console.log(url);
-      // Firebae에 새로운 제품 추가
-      addNewProduct(product, url);
-    });
+    setIsUploading(true);
+    uploadImage(file)
+      .then((url) => {
+        addNewProduct(product, url).then(() => {
+          setSuccess("성공적으로 제품이 추가되었습니다.");
+          setTimeout(() => {
+            setSuccess(null);
+          }, 4000);
+        });
+      })
+      .finally(() => {
+        setIsUploading(false);
+      });
   };
+
   return (
     <section>
       <h2>새로운 제품 등록</h2>
+      {success && <p>🤙{success}😍</p>}
       {file && <img src={URL.createObjectURL(file)} alt="local file" />}
       <form onSubmit={handleSubmit}>
         <div>
@@ -101,8 +111,10 @@ export default function AddProducts() {
             onChange={handleChange}
           />
         </div>
-        <button className="px-6 py-4 rounded-md bg-red-400 text-white">
-          제품등록하기
+        <button
+          className="px-6 py-4 rounded-md bg-red-400 text-white"
+          disabled={isUploading}>
+          {isUploading ? "업로드중" : "제품등록하기"}
         </button>
       </form>
     </section>
