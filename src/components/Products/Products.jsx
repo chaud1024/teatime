@@ -9,11 +9,12 @@ export default function Products() {
     data: products,
     error,
   } = useQuery(["products"], () => getProducts());
+
   return (
     <>
       {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
-      <ul>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4 p-4 mt-8">
         {products &&
           products.map((product) => (
             <ProductCard key={product.id} product={product} />
