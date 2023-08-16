@@ -94,6 +94,16 @@ export default function AddProducts() {
           required
         />
         <LableInput
+          htmlFor={`productNote`}
+          text={`제품노트`}
+          type={`text`}
+          name={`note`}
+          id={`productNote`}
+          onChange={handleChange}
+          value={product.note ?? ""}
+          placeholder={`제품노트`}
+        />
+        <LableInput
           htmlFor={`productDescription`}
           text={`제품설명`}
           type={`text`}
