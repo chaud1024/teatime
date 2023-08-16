@@ -4,9 +4,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
 import "./index.css";
 import AddProducts from "./page/AddProducts";
+import AllProducts from "./page/AllProducts";
 import Cart from "./page/Cart";
 import ProductDetail from "./page/ProductDetail";
-import Products from "./page/Products";
 
 import ProtectedRoute from "./page/ProtectedRoute";
 import reportWebVitals from "./reportWebVitals";
@@ -19,15 +19,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Products />,
+        element: <AllProducts />,
       },
       {
         path: "/products",
-        element: <Products />,
+        element: <AllProducts />,
       },
       {
         path: "/products/:keyword",
-        element: <Products />,
+        element: <AllProducts />,
       },
       {
         path: "/products/:productId",
