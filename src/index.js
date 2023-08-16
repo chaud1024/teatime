@@ -8,6 +8,7 @@ import AllProducts from "./page/AllProducts";
 import Cart from "./page/Cart";
 import ProductDetail from "./page/ProductDetail";
 
+import Home from "./page/Home";
 import ProtectedRoute from "./page/ProtectedRoute";
 import reportWebVitals from "./reportWebVitals";
 
@@ -19,18 +20,15 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <AllProducts />,
+        path: "/",
+        element: <Home />,
       },
       {
         path: "/products",
         element: <AllProducts />,
       },
       {
-        path: "/products/:keyword",
-        element: <AllProducts />,
-      },
-      {
-        path: "/products/:productId",
+        path: "/products/:id",
         element: <ProductDetail />,
       },
       {
