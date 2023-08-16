@@ -26,7 +26,7 @@ export async function login() {
   return signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
-      console.log(user);
+      console.log("user", user);
       return user;
     })
     .catch((error) => {
@@ -74,4 +74,18 @@ export async function addNewProduct(product, imageUrl) {
     image: imageUrl,
     options: product.options.split(","),
   });
+}
+
+export async function getProducts() {
+  return get(ref(database, "products"))
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        return Object.values(snapshot.val());
+      } else {
+        return [];
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
