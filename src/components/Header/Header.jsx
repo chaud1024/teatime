@@ -1,10 +1,10 @@
 import React from "react";
 import { AiOutlineEdit, AiOutlineUser } from "react-icons/ai";
 import { BiExit } from "react-icons/bi";
-import { HiOutlineShoppingBag } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../context/AuthContext";
 import Button from "../../ui/Button";
+import CartStatus from "../Cart/CartStatus";
 import Logo from "./Logo";
 import User from "./User";
 
@@ -20,11 +20,7 @@ export default function Header() {
         <Link className="p-2 font-semibold" to="/products">
           All Products
         </Link>
-        {user && (
-          <Link className="p-2" to="/cart">
-            <HiOutlineShoppingBag className="text-2xl" />
-          </Link>
-        )}
+        {user && <CartStatus />}
         {user && (
           <>
             {user.isAdmin ? (
