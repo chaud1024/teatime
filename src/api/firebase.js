@@ -89,3 +89,10 @@ export async function getProducts() {
       console.log(error);
     });
 }
+
+export async function getCart(userId) {
+  return get(ref(database, `carts/${userId}`)).then((snapshot) => {
+    const items = snapshot.val() || {};
+    return Object.values(items);
+  });
+}
