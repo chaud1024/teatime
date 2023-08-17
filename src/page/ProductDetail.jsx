@@ -45,7 +45,7 @@ export default function ProductDetail() {
         <h3 className="font-bold uppercase text-2xl tracking-widest mt-8 mb-4">
           {title}
         </h3>
-        <p className="flex items-center font-bold uppercase text-sm mb-5">
+        <p className="font-bold uppercase text-sm mb-5">
           {category}
           <span className="mx-2 w-[1px] h-3 bg-slate-600 inline-block"></span>{" "}
           {note}
