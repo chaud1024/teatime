@@ -96,3 +96,7 @@ export async function getCart(userId) {
     return Object.values(items);
   });
 }
+
+export async function addOrUpdateToCart(userId, product) {
+  return set(ref(database, `carts/${userId}/${product.id}`), product);
+}
