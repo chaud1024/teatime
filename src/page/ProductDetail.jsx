@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { addOrUpdateToCart } from "../api/firebase";
-import { useAuthContext } from "../context/AuthContext";
+import useCart from "../hooks/useCarts";
 
 export default function ProductDetail() {
-  const { uid } = useAuthContext();
+  const { addOrUpdateItem } = useCart();
   const {
     state: {
       product: {
@@ -20,6 +19,8 @@ export default function ProductDetail() {
     },
   } = useLocation();
 
+  const [success, setSuccess] = useState();
+
   const [selected, setSelected] = useState(options && options[0]);
 
   const handleSelect = (e) => {
@@ -28,7 +29,12 @@ export default function ProductDetail() {
 
   const handleClick = (e) => {
     const product = { id, image, title, price, option: selected, quantity: 1 };
-    addOrUpdateToCart(uid, product);
+    addOrUpdateItem.mutate(product, {
+      onSuccess: () => {
+        setSuccess("added into your cart!");
+        setTimeout(() => setSuccess(null), 3000);
+      },
+    });
   };
 
   return (
@@ -67,6 +73,9 @@ export default function ProductDetail() {
                 <option key={index}>{option}g</option>
               ))}
           </select>
+          {success && (
+            <p className="my-2 uppercase text-center font-bold">{success}</p>
+          )}
           <button
             className="w-full p-4 bg-black text-white uppercase font-bold"
             onClick={handleClick}>

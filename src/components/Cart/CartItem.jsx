@@ -1,22 +1,24 @@
 import React from "react";
 import { AiOutlineMinusSquare, AiOutlinePlusSquare } from "react-icons/ai";
 import { BsTrash3 } from "react-icons/bs";
-import { addOrUpdateToCart, removeFromCart } from "../../api/firebase";
+import useCart from "../../hooks/useCarts";
 
 const ICON_CLASS = "cursor-pointer hover:scale-105 text-lg";
 
 export default function ProductItem({
   product,
   product: { id, image, title, option, quantity, price },
-  uid,
 }) {
+  const { addOrUpdateItem, removeItem } = useCart();
   const handleMinus = () => {
     if (quantity < 2) return;
-    addOrUpdateToCart(uid, { ...product, quantity: quantity - 1 });
+    addOrUpdateItem.mutate({ ...product, quantity: quantity - 1 });
   };
+
   const handlePlus = () =>
-    addOrUpdateToCart(uid, { ...product, quantity: quantity + 1 });
-  const handleDelete = () => removeFromCart(uid, id);
+    addOrUpdateItem.mutate({ ...product, quantity: quantity + 1 });
+
+  const handleDelete = () => removeItem.mutate(id);
 
   return (
     <li className="flex gap-6 pb-6 mb-6 border-b border-gray-200">

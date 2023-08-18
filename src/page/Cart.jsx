@@ -1,15 +1,14 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { getCart } from "../api/firebase";
 import CartItem from "../components/Cart/CartItem";
 import PriceCard from "../components/Cart/PriceCard";
-import { useAuthContext } from "../context/AuthContext";
+import useCart from "../hooks/useCarts";
 
 const SHIPPING = 3.2;
 
 export default function Cart() {
-  const { uid } = useAuthContext();
-  const { isLoading, data: products } = useQuery(["carts"], () => getCart(uid));
+  const {
+    cartQuery: { isLoading, data: products },
+  } = useCart();
 
   if (isLoading) return <p>Loading...</p>;
 
@@ -24,18 +23,19 @@ export default function Cart() {
           current.quantity,
       0,
     );
+
   return (
     <section className="">
       <p className="font-bold text-2xl tracking-widest pb-4  mx-6 my-4 border-b-2 border-black">
         My Cart
       </p>
-      {!hasProducts && <p>Empty cart</p>}
+      {!hasProducts && <p className="mt-10 text-center">Cart is empty</p>}
       {hasProducts && (
         <>
           <ul className="mt-14 mx-6">
             {products &&
               products.map((product) => (
-                <CartItem key={product.id} product={product} uid={uid} />
+                <CartItem key={product.id} product={product} />
               ))}
           </ul>
 
