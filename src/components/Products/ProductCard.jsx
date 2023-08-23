@@ -22,7 +22,9 @@ export default function ProductCard({
       </div>
       <div className="flex flex-col grow justify-between">
         <div>
-          <h3 className="font-bold mt-4 mb-2 uppercase">{title}</h3>
+          <h3 className="font-bold mt-4 mb-2 uppercase tracking-wide">
+            {title}
+          </h3>
           <p className="text-sm text-gray-600 mb-2">
             <span>{category}</span>
             <span className="inline-block w-[1px] h-[10px] bg-gray-400 mx-2"></span>

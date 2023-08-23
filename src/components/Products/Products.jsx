@@ -50,20 +50,18 @@ export default function Products() {
         {filters.map((item) => (
           <li
             key={item.id}
-            className="w-24 h-24 rounded-full overflow-hidden relative">
-            <img
-              src={item.image}
-              alt={item.name}
-              className={`opacity-30 ${
-                item.name === filter ? "opacity-70" : ""
-              } `}
-            />
+            className="w-28 h-28 rounded-full overflow-hidden relative bg-neutral-600">
+            <img src={item.image} alt={item.name} className={`opacity-80`} />
             <button
               onClick={() => {
                 setFilter(item.name);
               }}
               value={item.name}
-              className="w-full h-full bg-transparent absolute inset-0">
+              className={`w-[5.5rem] h-[5.5rem] font-bold uppercase text-sm rounded-full absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 transition-all ease-in duration-800 hover:bg-white hover:text-black ${
+                item.name === filter
+                  ? "bg-white"
+                  : "bg-transparent text-white drop-shadow-lg"
+              } `}>
               {item.name}
             </button>
           </li>
