@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import { getProducts } from "../api/firebase";
+import Pagination from "../components/Pagenation/Pagination";
 import ProductCard from "../components/Products/ProductCard";
 
 export default function Home() {
@@ -9,6 +10,11 @@ export default function Home() {
     error,
     data: products,
   } = useQuery(["products"], () => getProducts());
+
+  const [limit] = useState(8);
+  const [page, setPage] = useState(1);
+  const offset = (page - 1) * limit;
+
   return (
     <>
       <>
@@ -24,10 +30,19 @@ export default function Home() {
 
         <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-4 p-4 mt-8">
           {products &&
-            products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            products
+              .slice(offset, offset + limit)
+              .map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
         </ul>
+
+        <Pagination
+          total={products.length}
+          limit={limit}
+          page={page}
+          setPage={setPage}
+        />
       </>
     </>
   );
